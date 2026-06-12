@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   JAGA design tokens — Tailwind v4 theme extensions
+   Source of truth for every screen. Mirrors the Paper design system.
+
+   ── G1 COLOR RULE (design-review.md) ────────────────────────────────
+   red / amber / green are RESERVED for verdict meaning ONLY:
+       scam (red)  ·  unsure (amber)  ·  safe (green)
+   Never use a verdict color for a CTA, status text, or decoration.
+       • Primary CTA buttons  → bg-ink (black), never amber
+       • Status / metadata     → text-muted / text-subtle (neutral gray),
+                                  never green
+   The palette below is namespaced so misuse is obvious in review:
+   if a button is `bg-scam`/`bg-unsure`/`bg-safe`, it's wrong.
+   ===================================================================== */
+
+@theme {
+  /* ---- Typeface ---- */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Inter", ui-monospace, "SF Mono", monospace;
+
+  /* ---- Neutrals — surfaces, text, CTAs, status (use freely) ---- */
+  --color-ink:      #0B0F14;  /* primary text + PRIMARY CTA background */
+  --color-ink-soft: #1F2733;  /* long-form body copy */
+  --color-subtle:   #4B5563;  /* secondary text */
+  --color-muted:    #6B7280;  /* metadata + status text (the neutral gray) */
+  --color-faint:    #9AA3AF;  /* placeholder / quiet detail */
+  --color-line:     #D8DDE3;  /* default borders */
+  --color-divider:  #E5E7EB;  /* hairline separators */
+  --color-fill:     #F2F4F7;  /* neutral surfaces, secondary chips */
+
+  /* ---- Verdict: SCAM (red) — verdict use ONLY ---- */
+  --color-scam:        #D92D20;  /* badge / dot / solid block */
+  --color-scam-ink:    #B42318;  /* scam text on light */
+  --color-scam-deep:   #7A271A;  /* scam finding/body text */
+  --color-scam-bg:     #FEE4E2;  /* tinted scam surface */
+  --color-scam-border: #FDA29B;
+
+  /* ---- Verdict: UNSURE (amber) — verdict use ONLY
+         (same hue doubles as the brand mark on dark surfaces) ---- */
+  --color-unsure:        #FFD84D;  /* amber verdict block / brand accent */
+  --color-unsure-strong: #F59E0B;  /* dot / icon at readable contrast */
+  --color-unsure-ink:    #7A5A00;  /* amber text on light */
+  --color-unsure-bg:     #FFF4D6;
+  --color-unsure-border: #F5C24B;
+
+  /* ---- Verdict: SAFE (green) — verdict use ONLY ---- */
+  --color-safe:     #167A55;
+  --color-safe-ink: #0F5C40;
+  --color-safe-bg:  #DCF0E6;
+
+  /* ---- Radius scale ---- */
+  --radius-chip:  10px;   /* small tinted chips */
+  --radius-card:  14px;   /* cards, banners, meters */
+  --radius-btn:   16px;   /* buttons */
+  --radius-frame: 36px;   /* device frame */
+}
+
+/* App shell — dark canvas behind the device frame, mirroring Paper */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #1f2024;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+}
