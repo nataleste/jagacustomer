@@ -5,12 +5,14 @@ import { ChevronLeft, PaperclipIcon, SendIcon } from '../components/icons'
 import { extractUrl, investigateLink } from '../lib/jaga'
 import mascot from '../assets/jaga-mascot.png'
 
-const INTRO = "Forward me any suspicious message, link, or call recording. I'll check it for you."
+const INTRO =
+  "Forward me any suspicious message or link and I'll check it. New here? Tap our test scam link below to see it in action."
 
-// Quick-fill examples so you can demo without typing.
+// Tap-to-try examples. The first is our staged phishing page (returns a real
+// scam verdict); the second is the genuine bank site (returns safe).
 const SUGGESTIONS = [
-  { label: 'Paste a suspicious link', value: 'https://dbs-secure-verify.com/login' },
-  { label: 'Paste a bank SMS', value: 'DBS: Your account is locked. Verify now at dbs-secure-verify.com or it will be closed today.' },
+  { label: 'Try scam link → dbs-secure.vercel.app', value: 'https://dbs-secure.vercel.app/' },
+  { label: 'Try safe link → dbs.com.sg', value: 'https://www.dbs.com.sg' },
 ]
 
 function Bubble({ from, children }) {
