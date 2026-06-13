@@ -119,7 +119,7 @@ on `:8000` and the dev proxy will pick it up.
 Team **JAGA**
 
 - Lim Yee Han
-- Ade Nat Lim
+- Ade Nat Loh
 - Hosan Swee
 - Mell Gao
 
