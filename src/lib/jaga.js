@@ -1,6 +1,11 @@
 // Client for Hosan's link-agent service (Bright Data + Daytona + TokenRouter).
 // Dev: calls /api/* which Vite proxies to http://localhost:8000.
+// Prod: set VITE_API_URL to the backend's public URL (e.g. a tunnel) so the
+// deployed app uses the REAL agent instead of the static fallback.
 // Response shape: { agent, risk: 0-100, findings: [string], evidence: {}, summary? }
+
+// Trailing slash trimmed; empty string = same-origin (dev proxy).
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 
 const URL_RE = /((?:https?:\/\/|www\.)\S+|[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:\/\S*)?)/i
 
@@ -15,13 +20,17 @@ export function extractUrl(text) {
 
 // POST a URL to the link agent. Throws if the service isn't reachable.
 export async function investigateLink(url, { phone } = {}) {
-  const res = await fetch('/api/investigate-link', {
+  const res = await fetch(`${API_BASE}/api/investigate-link`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ url, phone }),
   })
   if (!res.ok) throw new Error(`Link API responded ${res.status}`)
-  return res.json()
+  const data = await res.json()
+  // Make the Daytona screenshot path absolute so it loads cross-origin.
+  const shot = data?.evidence?.screenshot
+  if (shot && shot.startsWith('/api')) data.evidence.screenshot = API_BASE + shot
+  return data
 }
 
 // Map a 0-100 risk score to the verdict route variant.
