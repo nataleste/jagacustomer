@@ -99,7 +99,7 @@ export default function Report() {
 
         {/* Actions */}
         <div className="flex flex-col gap-2.5">
-          <PrimaryButton to="/report/filed" className="!py-[19px] !text-[20px]">File this report</PrimaryButton>
+          <PrimaryButton to="/report/sealing" className="!py-[19px] !text-[20px]">File this report</PrimaryButton>
           <SecondaryButton to="/guardian" className="!py-[19px] !text-[20px]">Share with Sarah</SecondaryButton>
           <div className="flex items-center gap-3 pt-1">
             <div className="flex flex-1 flex-col gap-0.5">

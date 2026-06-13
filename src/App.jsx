@@ -8,6 +8,7 @@ import Investigation from './screens/Investigation'
 import Verdict from './screens/Verdict'
 import Report from './screens/Report'
 import PlayMoment from './screens/PlayMoment'
+import Sealing from './screens/Sealing'
 import ReportFiled from './screens/ReportFiled'
 import Guardian from './screens/Guardian'
 import Settings from './screens/Settings'
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/verdict/:variant" element={<Verdict />} />
         <Route path="/report" element={<Report />} />
         <Route path="/report/moment" element={<PlayMoment />} />
+        <Route path="/report/sealing" element={<Sealing />} />
         <Route path="/report/filed" element={<ReportFiled />} />
         <Route path="/guardian" element={<Guardian />} />
         <Route path="/settings" element={<Settings />} />

@@ -1,15 +1,23 @@
+import { useLocation } from 'react-router-dom'
 import PhoneFrame from '../components/PhoneFrame'
-import { Eyebrow, PrimaryButton, SecondaryButton } from '../components/ui'
+import { PrimaryButton, SecondaryButton } from '../components/ui'
 import { CheckIcon, ShieldCheck, LockIcon } from '../components/icons'
-
-const ROWS = [
-  ['Report ID', 'SR-2026-0612-7788'],
-  ['Filed to', 'ScamShield (demo)'],
-  ['Signed by', 'JAGA · Terminal 3'],
-  ['Filed at', 'Today, 4:39 PM'],
-]
+import { short, dotSig } from '../lib/t3'
 
 export default function ReportFiled() {
+  // A real Terminal 3 seal arrives via router state (from the Sealing screen).
+  const seal = useLocation().state?.seal
+  const hash = seal?.hash
+
+  const rows = [
+    ['Report ID', hash ? 'SR-2026-0613-' + hash.slice(0, 4).toUpperCase() : 'SR-2026-0612-7788'],
+    ['Filed to', 'ScamShield (demo)'],
+    ['Signed by', 'JAGA · Terminal 3'],
+    ...(hash ? [['Evidence seal', short(hash)]] : []),
+    ['Filed at', 'Today, 4:39 PM'],
+  ]
+  const signature = hash ? dotSig(hash) : '0x9F2A·7C41·E0B8·…·D71C'
+
   return (
     <PhoneFrame>
       <div className="flex min-h-full flex-col gap-5 px-5 pb-5 pt-4">
@@ -39,7 +47,7 @@ export default function ReportFiled() {
           </div>
           <div className="h-px w-full bg-white/[0.16]" />
           <div className="flex flex-col gap-3.5">
-            {ROWS.map(([k, val]) => (
+            {rows.map(([k, val]) => (
               <div key={k} className="flex items-center justify-between gap-3">
                 <span className="text-[15px] font-medium leading-5 text-faint">{k}</span>
                 <span className="text-[15px] font-extrabold leading-5 text-white">{val}</span>
@@ -48,10 +56,10 @@ export default function ReportFiled() {
           </div>
           <div className="flex flex-col gap-1.5 rounded-[10px] bg-white/[0.08] px-[14px] py-3">
             <span className="text-[12px] font-black uppercase leading-4 tracking-[0.06em] text-faint">
-              Digital signature
+              Digital signature · did:t3n
             </span>
             <span className="break-all font-mono text-[14px] font-semibold leading-[19px] text-unsure">
-              0x9F2A·7C41·E0B8·…·D71C
+              {signature}
             </span>
           </div>
         </div>
