@@ -1,110 +1,126 @@
-<p align="center">
-  <img src="docs/readme-hero.svg" alt="JAGA mobile app catches a high-risk scam call and seals evidence for a report" width="100%" />
-</p>
+<div align="center">
 
-<h1 align="center">JAGA</h1>
+<img src="docs/hero.png" alt="JAGA, catch the scam while it is still on the call" width="100%" />
 
-<p align="center">
-  <strong>AI scam-call guardian that catches fraud during the call, explains the evidence, alerts a trusted contact, and files a signed report.</strong>
-</p>
+# JAGA
 
-<p align="center">
-  <a href="https://jagacustomer.vercel.app/"><strong>Live Demo</strong></a>
-  |
-  <a href="agent-forge-hackathon/docs/jaga-architecture.md">Architecture Notes</a>
-  |
-  <a href="agent-forge-hackathon/docs/judging-strategy.md">Judging Strategy</a>
-</p>
+**An AI guardian that catches phone scams while the call is still happening.**
 
-<p align="center">
-  <img alt="React 19" src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=111827" />
-  <img alt="Vite" src="https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
-  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img alt="Terminal 3" src="https://img.shields.io/badge/Terminal%203-Evidence%20Seal-FACC15?style=for-the-badge" />
-</p>
+[![Live demo](https://img.shields.io/badge/Live_demo-jagacustomer.vercel.app-D92D20?style=for-the-badge)](https://jagacustomer.vercel.app/)
+[![Mobile web](https://img.shields.io/badge/Mobile_web-jaga--mobile--web.vercel.app-0B0F14?style=for-the-badge)](https://jaga-mobile-web.vercel.app/)
 
-## What This Is
+<br/>
 
-JAGA turns a scam call into an explainable, reportable incident while the victim still has time to stop. The app listens to the call flow, surfaces risk signals in plain language, keeps the evidence moments, alerts a trusted guardian, and produces a signed report trail.
+![React](https://img.shields.io/badge/React_19-0B0F14?style=flat-square&logo=react)
+![Vite](https://img.shields.io/badge/Vite_8-0B0F14?style=flat-square&logo=vite)
+![Tailwind](https://img.shields.io/badge/Tailwind_v4-0B0F14?style=flat-square&logo=tailwindcss)
+![Twilio](https://img.shields.io/badge/Twilio-0B0F14?style=flat-square&logo=twilio)
+![Bright Data](https://img.shields.io/badge/Bright_Data-0B0F14?style=flat-square)
+![Daytona](https://img.shields.io/badge/Daytona-0B0F14?style=flat-square)
+![Kimi](https://img.shields.io/badge/Kimi-0B0F14?style=flat-square)
+![Terminal 3](https://img.shields.io/badge/Terminal_3-FFD84D?style=flat-square)
 
-This is built for the most stressful moment in a scam: when the caller is live, urgent, and pressuring someone to move money.
+</div>
 
-## Why Judges Should Care
+---
 
-| Criterion | Why JAGA scores |
-| --- | --- |
-| Completeness | Deployed mobile-first demo with onboarding, call log, live transcript, investigation, verdict, report, evidence seal, guardian alert, and settings screens. |
-| Real-life problem | Scam calls are high-pressure, time-sensitive, and especially hard for older or less technical users to evaluate alone. |
-| Innovation | Not another chatbot. JAGA is an agentic safety loop: detect, explain, escalate, preserve evidence, and report. |
-| Sponsor fit | Terminal 3-style evidence signing is visible in the product flow; the hackathon stack includes Twilio, Supabase, VideoDB-style media evidence, and link-investigation adapters for Bright Data, Daytona, and TokenRouter. |
+## The problem
 
-## Demo Flow
+Every day, someone's parent picks up the phone and a stranger talks them out of their
+savings. The caller sounds like the bank. They sound urgent. They say to move money to a
+"safe account," to read out a code, to keep it quiet. By the time family finds out, the
+money is gone.
 
-1. Open the [live demo](https://jagacustomer.vercel.app/).
-2. Enter the call log and watch a live unknown caller get scored as high risk.
-3. Open the transcript to see the exact scam language JAGA flagged.
-4. Continue to the investigation and verdict screens to see why the call is unsafe.
-5. File the report and watch the evidence manifest get hashed and sealed.
-6. Show the guardian alert: the trusted contact gets the same high-risk context without needing to understand the technical details.
+The victims are rarely careless. They are elderly, or new to the country, or simply caught
+off guard on a normal afternoon, alone on a call with someone trained to rush them.
 
-## Product Highlights
+**JAGA puts a guardian on that call.**
 
-- Real-time call risk UI with a clear score, status, and next action.
-- Evidence moments that preserve the exact scam phrases, such as money movement and secrecy pressure.
-- Link and message checking path for suspicious SMS, URLs, or recordings.
-- Guardian flow for family safety: JAGA alerts a trusted person when a scam is likely.
-- Terminal 3-inspired evidence seal that hashes transcript, findings, and recording references in-browser.
-- Multilingual-ready settings for English, Chinese, and Malay.
-- Mobile-first design that looks like a real consumer safety app, not a hackathon dashboard.
+## What it does
 
-## System Shape
+JAGA is a number you add to your phone. It quietly joins your calls, transcribes them in
+real time, and watches for the patterns scammers use. When it sees one, it acts.
 
-```mermaid
-flowchart LR
-  A[Scam call or suspicious message] --> B[JAGA mobile experience]
-  B --> C[Live transcript and risk signals]
-  C --> D[Agent investigation]
-  D --> E[Plain-language verdict]
-  E --> F[Guardian alert]
-  E --> G[Report filing flow]
-  G --> H[Terminal 3 evidence seal]
-```
+<table>
+<tr>
+<td width="33%"><img src="docs/screens/01-home.png" /></td>
+<td width="33%"><img src="docs/screens/02-transcript.png" /></td>
+<td width="33%"><img src="docs/screens/04-verdict.png" /></td>
+</tr>
+<tr>
+<td align="center"><b>Live detection.</b> The call log scores a call as it streams in.</td>
+<td align="center"><b>Live transcript.</b> Every line is read as it is spoken. Danger lights up.</td>
+<td align="center"><b>A verdict you can read.</b> "This is a scam," in plain English and 中文.</td>
+</tr>
+</table>
 
-## Tech Stack
+## How it works
 
-| Layer | Stack |
-| --- | --- |
-| Frontend demo | React 19, Vite, React Router, Tailwind CSS 4 |
-| Deployed app | Vercel |
-| Live-call prototype | Twilio Voice, Twilio transcription events, Supabase edge functions |
-| Media evidence path | VideoDB-style call recording evidence model |
-| Link investigation path | `/api/investigate-link` client for Bright Data, Daytona, and TokenRouter-backed checks |
-| Trust layer | Browser SHA-256 evidence manifest plus Terminal 3 DID-style signed receipt UI |
+**1. Guard the call.** JAGA joins over Twilio, transcribes live, and scores the call as it
+happens. The moment it reads a scam pattern, it warns the person on the line and alerts their
+trusted guardian.
 
-## Repo Map
+**2. Check a link or message.** Forward any suspicious SMS or link. An agent opens it inside a
+Daytona sandbox, a sealed test space, while Bright Data pulls the real page. Kimi reads the
+transcript and the page together and returns a risk score from 0 to 100 with findings. You see
+the fake site captured safely, never on your own phone.
 
-```text
-.
-|-- src/                         # Deployed judge-facing React/Vite app
-|   |-- screens/                 # Onboarding, call log, transcript, verdict, report, guardian
-|   |-- lib/jaga.js              # Link investigation client and verdict routing
-|   `-- lib/t3.js                # Evidence hashing and Terminal 3-style receipt data
-|-- agent-forge-hackathon/
-|   |-- mobile/                  # Twilio/Supabase live-call prototype
-|   |-- supabase/functions/      # Voice, recording, transcription, and evidence functions
-|   `-- docs/                    # Architecture, PRDs, runbooks, judging strategy
-`-- docs/readme-hero.svg         # Judge-facing README hero
-```
+**3. Seal the evidence.** JAGA writes a plain-language report, then hashes the transcript,
+recording, and findings into an evidence manifest. The SHA-256 is computed for real in your
+browser. The manifest is sealed and signed through Terminal 3 with a `did:t3n` identity and a
+TEE attestation, then filed. You keep a signed receipt, and no personal details ever leave.
 
-## Run Locally
+<table>
+<tr>
+<td width="25%"><img src="docs/screens/08-guardian.png" /></td>
+<td width="25%"><img src="docs/screens/03-investigation.png" /></td>
+<td width="25%"><img src="docs/screens/06-sealing.png" /></td>
+<td width="25%"><img src="docs/screens/07-filed.png" /></td>
+</tr>
+<tr>
+<td align="center">Family is alerted</td>
+<td align="center">Link opened in a sandbox</td>
+<td align="center">Real SHA-256 evidence seal</td>
+<td align="center">Signed, filed receipt</td>
+</tr>
+</table>
+
+## Under the hood
+
+| Layer | Tech | What it does |
+|---|---|---|
+| App | React 19, Vite 8, Tailwind v4, React Router 7 | One connected demo app, one route per screen, built on a strict design system |
+| Voice | Twilio | JAGA's number joins the call and streams the live transcript |
+| Link agent | Bright Data, Daytona, Kimi (via TokenRouter) | Detonates suspicious links in a sandbox, scrapes the real page, scores the risk |
+| Evidence | Terminal 3 (t3n) | In-browser SHA-256 manifest, `did:t3n` signature, TEE attestation, signed receipt |
+| Languages | English, 中文, Melayu | Verdicts are written for the people most often targeted |
+
+The link agent runs as a service on `:8000`. The app proxies `/api/*` to it in dev and falls
+back to a static demo when it is offline, so the flow never breaks in front of an audience.
+
+## Dig deeper
+
+- [Architecture notes](agent-forge-hackathon/docs/jaga-architecture.md)
+- [Judging strategy](agent-forge-hackathon/docs/judging-strategy.md)
+- [Live flow PRD](agent-forge-hackathon/docs/jaga/PRD-1-live-flow.md) · [Report flow PRD](agent-forge-hackathon/docs/jaga/PRD-2-report-flow.md) · [Police reporting PRD](agent-forge-hackathon/docs/jaga/PRD-3-police-reporting-flow.md)
+
+## Run it locally
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:5173
 ```
 
-The root app is the deployed visual demo. The `agent-forge-hackathon/mobile` workspace contains the deeper Twilio/Supabase prototype and has its own package scripts.
+The app runs fully on its own with demo data. To wire up the live link agent, run that service
+on `:8000` and the dev proxy will pick it up.
 
-## The One-liner
+## Built for AGENTFORGE AI
 
-JAGA is a scam-call co-pilot for families: it catches the fraud pattern, shows the proof, alerts someone trusted, and turns the call into a signed report before the damage is done.
+Team **JAGA**
+
+- Lim Yee Han
+- Ade Nat Lim
+- Hosan Swee
+- Mell Gao
+
+JAGA means "to guard, to watch over." That is the whole idea.

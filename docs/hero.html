@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 680px; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: #0B0F14;
+    overflow: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+  .glow-amber {
+    position: absolute; width: 760px; height: 760px; right: -120px; top: -240px;
+    background: radial-gradient(circle, rgba(255,216,77,0.20) 0%, rgba(255,216,77,0) 62%);
+  }
+  .glow-red {
+    position: absolute; width: 720px; height: 720px; right: 120px; bottom: -300px;
+    background: radial-gradient(circle, rgba(217,45,32,0.22) 0%, rgba(217,45,32,0) 60%);
+  }
+  .wrap { position: relative; z-index: 2; display: flex; height: 100%; }
+  .left { width: 660px; padding: 76px 0 76px 80px; display: flex; flex-direction: column; justify-content: center; }
+  .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; }
+  .brand img { width: 78px; height: 78px; object-fit: contain; }
+  .wordmark { font-weight: 900; font-size: 62px; letter-spacing: 2px; color: #fff; line-height: 1; }
+  .eyebrow { font-weight: 800; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: #FFD84D; margin-bottom: 18px; }
+  h1 { font-weight: 900; font-size: 64px; line-height: 1.02; letter-spacing: -1.5px; color: #fff; margin-bottom: 26px; }
+  h1 .amber { color: #FFD84D; }
+  .sub { font-weight: 500; font-size: 21px; line-height: 1.5; color: #AAB2BD; max-width: 540px; margin-bottom: 34px; }
+  .chips { display: flex; gap: 12px; margin-bottom: 40px; }
+  .chip {
+    display: flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px; padding: 11px 18px; font-size: 15px; font-weight: 700; color: #E5E7EB;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #FFD84D; }
+  .dot.red { background: #D92D20; }
+  .dot.green { background: #34C77B; }
+  .tech { font-family: "JetBrains Mono", monospace; font-size: 14px; color: #5F6B7A; letter-spacing: 0.2px; }
+  .tech b { color: #8B95A3; font-weight: 500; }
+  .right { position: relative; flex: 1; }
+  .phone { position: absolute; border-radius: 54px; box-shadow: 0 40px 90px rgba(0,0,0,0.55); }
+  .phone.front { height: 588px; right: 232px; top: 46px; transform: rotate(-4deg); z-index: 2; }
+  .phone.back  { height: 556px; right: 36px; top: 96px; transform: rotate(5deg); z-index: 1; }
+</style>
+</head>
+<body>
+  <div class="glow-amber"></div>
+  <div class="glow-red"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="brand">
+        <img src="hero-assets/mascot.png" alt="JAGA mascot" />
+        <div class="wordmark">JAGA</div>
+      </div>
+      <div class="eyebrow">AI scam-call guardian</div>
+      <h1>Catch the scam<br/>while it is still<br/><span class="amber">on the call.</span></h1>
+      <div class="sub">JAGA joins the call, transcribes it live, and warns you and your family the second a scammer makes their move. Then it seals the evidence and files the report for you.</div>
+      <div class="chips">
+        <div class="chip"><span class="dot red"></span>Live transcription</div>
+        <div class="chip"><span class="dot"></span>Agentic link checks</div>
+        <div class="chip"><span class="dot green"></span>Tamper-proof evidence</div>
+      </div>
+      <div class="tech">Built with <b>React</b> · <b>Twilio</b> · <b>Bright Data</b> · <b>Daytona</b> · <b>Kimi</b> · <b>Terminal&nbsp;3</b></div>
+    </div>
+    <div class="right">
+      <img class="phone back" src="hero-assets/06-sealing-phone.png" alt="Terminal 3 evidence seal" />
+      <img class="phone front" src="hero-assets/04-verdict-phone.png" alt="JAGA verdict: this is a scam" />
+    </div>
+  </div>
+</body>
+</html>
