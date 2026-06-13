@@ -2,12 +2,20 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from './icons'
 
 // Device frame (390×844) with the JAGA status bar.
-// The status bar carries a Back control on every screen except the roots
-// (Onboarding "/" and CallsHome "/home"). Screens that already show their own
-// header back arrow (Chat, Play moment) pass `back={false}`.
-// `dark` flips the frame to ink (used by the Terminal 3 seal screen).
+// Status bar carries a Back control (left) and a persistent Home control
+// (right) so you can always get out of any screen. Roots hide their own:
+// Onboarding "/" and CallsHome "/home". `dark` flips the frame to ink.
 
-function StatusBar({ showBack, dark }) {
+function HomeIcon({ size = 18, className }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M3.5 11.5L12 4l8.5 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5.5 10v9.5h13V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function StatusBar({ showBack, showHome, dark }) {
   const navigate = useNavigate()
   const fg = dark ? 'text-white' : 'text-ink'
   return (
@@ -25,10 +33,17 @@ function StatusBar({ showBack, dark }) {
         )}
         <span className={`text-[17px] font-bold leading-[22px] ${fg}`}>9:41</span>
       </div>
-      <div className="flex items-center gap-[5px]">
-        <div className={`h-[10px] w-[18px] rounded-[2px] ${dark ? 'bg-white' : 'bg-ink'}`} />
-        <div className={`h-[10px] w-[14px] rounded-[2px] ${dark ? 'bg-white' : 'bg-ink'}`} />
-        <div className={`h-3 w-6 rounded-[4px] border-2 ${dark ? 'border-white' : 'border-ink'}`} />
+      <div className="flex items-center gap-3.5">
+        {showHome && (
+          <button type="button" aria-label="Home" onClick={() => navigate('/home')} className={fg}>
+            <HomeIcon size={18} />
+          </button>
+        )}
+        <div className="flex items-center gap-[5px]">
+          <div className={`h-[10px] w-[18px] rounded-[2px] ${dark ? 'bg-white' : 'bg-ink'}`} />
+          <div className={`h-[10px] w-[14px] rounded-[2px] ${dark ? 'bg-white' : 'bg-ink'}`} />
+          <div className={`h-3 w-6 rounded-[4px] border-2 ${dark ? 'border-white' : 'border-ink'}`} />
+        </div>
       </div>
     </div>
   )
@@ -36,7 +51,8 @@ function StatusBar({ showBack, dark }) {
 
 export default function PhoneFrame({ children, className = '', back = true, dark = false }) {
   const { pathname } = useLocation()
-  const isRoot = pathname === '/' || pathname === '/home'
+  const isHome = pathname === '/home'
+  const isOnboarding = pathname === '/'
   return (
     <div
       className={
@@ -46,7 +62,7 @@ export default function PhoneFrame({ children, className = '', back = true, dark
       }
       style={{ height: 844 }}
     >
-      <StatusBar showBack={back && !isRoot} dark={dark} />
+      <StatusBar showBack={back && !isHome && !isOnboarding} showHome={!isHome && !isOnboarding} dark={dark} />
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
     </div>
   )

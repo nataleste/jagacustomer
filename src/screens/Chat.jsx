@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PhoneFrame from '../components/PhoneFrame'
-import { ChevronLeft, ShieldCheck, PaperclipIcon, SendIcon } from '../components/icons'
+import { ChevronLeft, PaperclipIcon, SendIcon } from '../components/icons'
 import { extractUrl, investigateLink } from '../lib/jaga'
+import mascot from '../assets/jaga-mascot.png'
 
 const INTRO = "Forward me any suspicious message, link, or call recording. I'll check it for you."
 
@@ -77,9 +78,7 @@ export default function Chat() {
         <button type="button" aria-label="Back" onClick={() => navigate(-1)} className="shrink-0 text-ink">
           <ChevronLeft size={20} />
         </button>
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink">
-          <ShieldCheck size={24} className="text-unsure" />
-        </div>
+        <img src={mascot} alt="JAGA" className="h-11 w-11 shrink-0 object-contain" />
         <div className="flex flex-1 flex-col gap-0.5">
           <span className="text-[19px] font-black leading-6 text-ink">JAGA</span>
           {/* status = neutral gray (G1), never green */}

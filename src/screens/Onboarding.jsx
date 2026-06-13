@@ -2,6 +2,7 @@ import PhoneFrame from '../components/PhoneFrame'
 import { PrimaryButton } from '../components/ui'
 import { CheckCircle, ShieldCheck } from '../components/icons'
 import logo from '../assets/jaga-lockup-horizontal.svg'
+import mascot from '../assets/jaga-mascot.png'
 
 function Toggle() {
   return (
@@ -23,12 +24,15 @@ export default function Onboarding() {
   return (
     <PhoneFrame>
       <div className="flex flex-col gap-6 px-5 pb-6 pt-2">
-        <div className="flex flex-col gap-1.5">
-          <img src={logo} alt="JAGA" className="mb-2 h-11 w-auto" />
-          <h1 className="text-[34px] font-black leading-[38px] text-ink">Let’s set you up</h1>
-          <p className="text-[16px] font-medium leading-[22px] text-subtle">
-            Three quick things. You can change them later.
-          </p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-col gap-1.5">
+            <img src={logo} alt="JAGA" className="mb-2 h-11 w-auto" />
+            <h1 className="text-[34px] font-black leading-[38px] text-ink">Let’s set you up</h1>
+            <p className="text-[16px] font-medium leading-[22px] text-subtle">
+              Three quick things. You can change them later.
+            </p>
+          </div>
+          <img src={mascot} alt="" className="mt-1 h-[64px] w-[64px] shrink-0 object-contain" />
         </div>
 
         {/* Step 1 — trusted contact */}
