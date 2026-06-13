@@ -1,0 +1,26 @@
+# Render Blueprint — deploys the JAGA link agent (Daytona + Bright Data + Kimi).
+# In Render: New + → Blueprint → pick this repo. It reads this file, then you
+# just paste the 6 secret values (marked sync:false) and click Apply.
+services:
+  - type: web
+    name: jaga-link-agent
+    runtime: python
+    plan: free
+    rootDir: server
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DAYTONA_API_KEY
+        sync: false
+      - key: BRIGHT_DATA_API_KEY
+        sync: false
+      - key: BRIGHT_DATA_ZONE
+        sync: false
+      - key: TOKENROUTER_API_KEY
+        sync: false
+      - key: TOKENROUTER_BASE_URL
+        sync: false
+      - key: TOKENROUTER_MODEL
+        sync: false
