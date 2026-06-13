@@ -1,0 +1,19 @@
+project_id = "ysfynixbiemcobthtduf"
+
+[functions.twilio-voice]
+verify_jwt = false
+
+[functions.twilio-transcription]
+verify_jwt = false
+
+[functions.twilio-transcript]
+verify_jwt = false
+
+[functions.twilio-recording]
+verify_jwt = false
+
+[functions.simulate-twilio]
+verify_jwt = false
+
+[functions.videodb-index]
+verify_jwt = false

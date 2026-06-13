@@ -1,0 +1,26 @@
+{
+  "name": "jaga-mobile-web",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "twilio:bridge": "node scripts/twilio-bridge.mjs",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "@twilio/voice-sdk": "^2.18.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "twilio": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "typescript": "^6.0.3",
+    "vite": "^7.2.7"
+  },
+  "private": true
+}
