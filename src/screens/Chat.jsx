@@ -1,17 +1,63 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import PhoneFrame from '../components/PhoneFrame'
-import { ChevronLeft, ShieldCheck, ShieldAlert, ForwardIcon, PaperclipIcon, SendIcon } from '../components/icons'
+import { ChevronLeft, ShieldCheck, PaperclipIcon, SendIcon } from '../components/icons'
+
+const INTRO = "Forward me any suspicious message, link, or call recording. I'll check it for you."
+
+// Quick-fill examples so you can demo without typing.
+const SUGGESTIONS = [
+  { label: 'Paste a suspicious link', value: 'https://dbs-secure-verify.com/login' },
+  { label: 'Paste a bank SMS', value: 'DBS: Your account is locked. Verify now at dbs-secure-verify.com or it will be closed today.' },
+]
+
+const looksLikeLink = (t) => /https?:\/\/|www\.|\.[a-z]{2,}(\/|\b)/i.test(t)
+
+function Bubble({ from, children }) {
+  if (from === 'user') {
+    return (
+      <div className="flex max-w-[84%] self-end">
+        <div className="rounded-[18px_18px_4px_18px] bg-ink px-[15px] py-[13px]">
+          <p className="break-words text-[16px] font-medium leading-[23px] text-white">{children}</p>
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="flex max-w-[84%] self-start">
+      <div className="rounded-[18px_18px_18px_4px] border border-divider bg-white px-[15px] py-[13px]">
+        <p className="text-[16px] font-medium leading-[23px] text-ink-soft">{children}</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Chat() {
   const navigate = useNavigate()
-  const [message, setMessage] = useState('')
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
+  const [messages, setMessages] = useState([{ id: 0, from: 'jaga', text: INTRO }])
 
-  // Sending (or pressing Enter) runs the check → Investigation.
   function send(e) {
     e.preventDefault()
-    navigate('/investigation')
+    const text = input.trim()
+    if (!text || sending) return
+    const checking = looksLikeLink(text)
+      ? 'Opening this link in a sealed sandbox…'
+      : 'Checking this now…'
+    setMessages((m) => [
+      ...m,
+      { id: m.length, from: 'user', text },
+      { id: m.length + 1, from: 'jaga', text: checking },
+    ])
+    setInput('')
+    setSending(true)
+    // Hand off to the live investigation (where the detonation result shows).
+    setTimeout(() => navigate('/investigation'), 1100)
   }
+
+  const showSuggestions = messages.length === 1 && !sending
+
   return (
     <PhoneFrame back={false}>
       {/* Chat header */}
@@ -40,68 +86,52 @@ export default function Chat() {
           </span>
         </div>
 
-        {/* JAGA intro (incoming) */}
-        <div className="flex max-w-[84%] self-start">
-          <div className="rounded-[18px_18px_18px_4px] border border-divider bg-white px-[15px] py-[13px]">
-            <p className="text-[16px] font-medium leading-[23px] text-ink-soft">
-              Forward me any suspicious message, link, or call recording. I’ll check it for you.
-            </p>
-          </div>
-        </div>
-
-        {/* Forwarded SMS (outgoing, light/outlined — not brand-black) */}
-        <div className="flex max-w-[84%] self-end">
-          <div className="flex flex-col gap-2 rounded-[18px_18px_4px_18px] border border-line bg-white px-[15px] py-[13px]">
-            <div className="flex items-center gap-1.5">
-              <ForwardIcon size={14} className="text-muted" />
-              <span className="text-[12px] font-extrabold uppercase leading-4 tracking-[0.04em] text-muted">
-                Forwarded SMS
-              </span>
-            </div>
-            <p className="text-[16px] font-medium leading-[23px] text-ink-soft">
-              DBS: Your account is locked. Verify now at dbs-secure-verify.com or it will be closed today.
-            </p>
-          </div>
-        </div>
-
-        {/* JAGA verdict bubble */}
-        <div className="flex max-w-[88%] self-start">
-          <div className="flex flex-col gap-3 rounded-[18px_18px_18px_4px] bg-scam p-4">
-            <div className="flex items-center gap-2.5">
-              <ShieldAlert size={24} className="shrink-0 text-white" />
-              <span className="text-[22px] font-black leading-[26px] text-white">Scam · 95% sure</span>
-            </div>
-            <p className="text-[16px] font-medium leading-[23px] text-white">
-              The link is a fake DBS site made 1 day ago. Do not tap it or share any details.
-            </p>
-            <Link to="/investigation" className="flex items-center justify-center rounded-[12px] bg-white p-3 text-[16px] font-black leading-5 text-scam-ink">
-              See the full check
-            </Link>
-          </div>
-        </div>
+        {messages.map((m) => (
+          <Bubble key={m.id} from={m.from}>
+            {m.text}
+          </Bubble>
+        ))}
       </div>
 
-      {/* Input bar */}
-      <form onSubmit={send} className="flex shrink-0 items-center gap-2.5 border-t border-divider bg-white px-4 pb-5 pt-3">
-        <div className="flex flex-1 items-center gap-2.5 rounded-full bg-fill px-[18px] py-[13px]">
-          <PaperclipIcon size={20} className="shrink-0 text-muted" />
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Forward or paste a message…"
-            className="w-full bg-transparent text-[16px] font-medium leading-[21px] text-ink outline-none placeholder:text-muted"
-          />
-        </div>
-        {/* send = primary action → bg-ink (G1), not amber */}
-        <button
-          type="submit"
-          aria-label="Send"
-          className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-ink"
-        >
-          <SendIcon size={24} className="text-white" />
-        </button>
-      </form>
+      {/* Suggestions + input */}
+      <div className="flex shrink-0 flex-col gap-2.5 border-t border-divider bg-white px-4 pb-5 pt-3">
+        {showSuggestions && (
+          <div className="flex flex-wrap gap-2">
+            {SUGGESTIONS.map((s) => (
+              <button
+                key={s.label}
+                type="button"
+                onClick={() => setInput(s.value)}
+                className="rounded-full border border-line bg-fill px-3.5 py-2 text-[13px] font-bold leading-4 text-subtle"
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <form onSubmit={send} className="flex items-center gap-2.5">
+          <div className="flex flex-1 items-center gap-2.5 rounded-full bg-fill px-[18px] py-[13px]">
+            <PaperclipIcon size={20} className="shrink-0 text-muted" />
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Forward or paste a message…"
+              className="w-full bg-transparent text-[16px] font-medium leading-[21px] text-ink outline-none placeholder:text-muted"
+            />
+          </div>
+          {/* send = primary action → bg-ink (G1), not amber */}
+          <button
+            type="submit"
+            aria-label="Send"
+            className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-ink disabled:opacity-40"
+            disabled={!input.trim() || sending}
+          >
+            <SendIcon size={24} className="text-white" />
+          </button>
+        </form>
+      </div>
     </PhoneFrame>
   )
 }

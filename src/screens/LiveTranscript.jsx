@@ -67,7 +67,7 @@ export default function LiveTranscript() {
 
         {/* Actions */}
         <div className="flex flex-col gap-2.5 pt-1">
-          <PrimaryButton to="/investigation" icon={<ForwardIcon size={22} className="text-white" />} className="!py-[18px] !text-[19px]">
+          <PrimaryButton to="/chat" icon={<ForwardIcon size={22} className="text-white" />} className="!py-[18px] !text-[19px]">
             Check a message or link
           </PrimaryButton>
           <SecondaryButton className="!py-[18px] !text-[19px]">Add note</SecondaryButton>
