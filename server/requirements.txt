@@ -1,0 +1,8 @@
+daytona
+python-dotenv
+requests
+playwright
+fastapi
+uvicorn
+python-multipart
+openai

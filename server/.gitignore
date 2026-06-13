@@ -1,0 +1,7 @@
+.env
+env
+.venv/
+__pycache__/
+evidence/
+*.png
+node_modules/
