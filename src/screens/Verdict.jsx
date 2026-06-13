@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import PhoneFrame from '../components/PhoneFrame'
 import { PrimaryButton, SecondaryButton } from '../components/ui'
 import { ShieldAlert, ShieldCheck, PhoneDownIcon, FlagIcon, PhoneIcon, BookmarkIcon } from '../components/icons'
@@ -88,6 +88,15 @@ export default function Verdict({ variant: variantProp }) {
   const params = useParams()
   const variant = params.variant || variantProp || 'scam'
   const v = VARIANTS[variant] || VARIANTS.scam
+
+  // A real finding (from Hosan's link agent) overrides the demo copy.
+  const finding = useLocation().state?.finding
+  const big = finding ? `${finding.risk}%` : v.big
+  const reasonEn = finding
+    ? finding.summary || (finding.findings || []).join('. ')
+    : v.reasonEn
+  const reasonZh = finding ? null : v.reasonZh
+
   return (
     <PhoneFrame>
       <div className="flex flex-1 flex-col gap-4 px-5 pb-5 pt-2">
@@ -108,7 +117,7 @@ export default function Verdict({ variant: variantProp }) {
             </h1>
             <div className="flex items-baseline gap-2">
               <span className={`shrink-0 whitespace-nowrap text-[30px] font-black leading-[32px] ${v.headlineColor}`}>
-                {v.big}
+                {big}
               </span>
               <span className={`text-[18px] font-bold leading-6 ${v.subColor}`}>{v.small}</span>
             </div>
@@ -117,8 +126,10 @@ export default function Verdict({ variant: variantProp }) {
           <div className={`h-px w-full ${v.divider}`} />
 
           <div className="flex flex-col gap-3">
-            <p className={`text-[23px] font-bold leading-[30px] ${v.reasonEnColor}`}>{v.reasonEn}</p>
-            <p className={`text-[21px] font-medium leading-[29px] ${v.reasonZhColor}`}>{v.reasonZh}</p>
+            <p className={`text-[23px] font-bold leading-[30px] ${v.reasonEnColor}`}>{reasonEn}</p>
+            {reasonZh && (
+              <p className={`text-[21px] font-medium leading-[29px] ${v.reasonZhColor}`}>{reasonZh}</p>
+            )}
           </div>
 
           <div className="flex-1" />

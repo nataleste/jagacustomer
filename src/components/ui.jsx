@@ -19,9 +19,9 @@ function buttonClasses(base, className) {
   return `flex w-full items-center justify-center gap-[10px] rounded-btn py-5 text-[21px] font-black leading-[26px] ${base} ${className}`
 }
 
-export function PrimaryButton({ children, icon, to, onClick, className = '' }) {
+export function PrimaryButton({ children, icon, to, state, onClick, className = '' }) {
   const cls = buttonClasses('bg-ink text-white', className)
-  if (to) return <Link to={to} className={cls}>{icon}{children}</Link>
+  if (to) return <Link to={to} state={state} className={cls}>{icon}{children}</Link>
   return <button onClick={onClick} className={cls}>{icon}{children}</button>
 }
 

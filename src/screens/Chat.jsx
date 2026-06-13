@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PhoneFrame from '../components/PhoneFrame'
 import { ChevronLeft, ShieldCheck, PaperclipIcon, SendIcon } from '../components/icons'
+import { extractUrl, investigateLink } from '../lib/jaga'
 
 const INTRO = "Forward me any suspicious message, link, or call recording. I'll check it for you."
 
@@ -10,8 +11,6 @@ const SUGGESTIONS = [
   { label: 'Paste a suspicious link', value: 'https://dbs-secure-verify.com/login' },
   { label: 'Paste a bank SMS', value: 'DBS: Your account is locked. Verify now at dbs-secure-verify.com or it will be closed today.' },
 ]
-
-const looksLikeLink = (t) => /https?:\/\/|www\.|\.[a-z]{2,}(\/|\b)/i.test(t)
 
 function Bubble({ from, children }) {
   if (from === 'user') {
@@ -38,11 +37,12 @@ export default function Chat() {
   const [sending, setSending] = useState(false)
   const [messages, setMessages] = useState([{ id: 0, from: 'jaga', text: INTRO }])
 
-  function send(e) {
+  async function send(e) {
     e.preventDefault()
     const text = input.trim()
     if (!text || sending) return
-    const checking = looksLikeLink(text)
+    const url = extractUrl(text)
+    const checking = url
       ? 'Opening this link in a sealed sandbox…'
       : 'Checking this now…'
     setMessages((m) => [
@@ -52,8 +52,20 @@ export default function Chat() {
     ])
     setInput('')
     setSending(true)
-    // Hand off to the live investigation (where the detonation result shows).
-    setTimeout(() => navigate('/investigation'), 1100)
+
+    // If there's a link, run it through Hosan's agent and carry the real
+    // finding into the Investigation. If the service is down (or no link),
+    // fall back to the static demo so the flow never breaks.
+    if (url) {
+      try {
+        const finding = await investigateLink(url)
+        navigate('/investigation', { state: { finding } })
+        return
+      } catch {
+        /* service unreachable — fall through to static demo */
+      }
+    }
+    setTimeout(() => navigate('/investigation'), 600)
   }
 
   const showSuggestions = messages.length === 1 && !sending
